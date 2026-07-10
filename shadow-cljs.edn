@@ -1,0 +1,11 @@
+;; shadow-cljs build for the LIGHTNING browser host adapter (ADR-2607100900
+;; follow-up (b) -- ClojureScript, same reasoning as FLOW/HARMONY: real-time
+;; shot timing + audio are host-imports clojurewasm/kotoba-wasm can't
+;; provide yet (ADR-2607100030 addendum 2). output-dir == the dev-http root,
+;; same layout as the rest of the portfolio's browser builds.
+{:deps   {:aliases [:cljs]}
+ :builds {:app {:target     :browser
+                :output-dir "public"
+                :asset-path "."
+                :modules    {:main {:init-fn ghosthacker-lightning.web/init}}
+                :dev-http   {8303 "public"}}}}
