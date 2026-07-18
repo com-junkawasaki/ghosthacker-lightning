@@ -1,0 +1,4 @@
+(ns kotoba.com-junkawasaki.ghosthacker-lightning.negative-eval)
+
+(defn main []
+  (eval '(+ 40 2)))
