@@ -1,0 +1,12 @@
+(ns kotoba.com-junkawasaki.ghosthacker-lightning.timing
+  (:export [abs-ms shot-hit]))
+
+(defn abs-ms [x]
+  (if (< x 0) (- x) x))
+
+;; delta-present is supplied by the host schedule adapter: 0 means the
+;; schedule was empty, 1 means delta-ms is the bounded unsigned distance.
+(defn shot-hit [delta-present delta-ms threshold-ms]
+  (if delta-present
+    (if (<= delta-ms threshold-ms) 1 0)
+    0))
