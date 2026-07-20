@@ -1,0 +1,13 @@
+(ns kotoba.com-junkawasaki.ghosthacker-lightning.timing-release-v0-6-22
+  (:export [abs-ms shot-hit]))
+
+;; Compatibility fixture for the installed v0.6.22 release lane. The
+;; canonical timing.kotoba uses the subsequently qualified static
+;; multi-arity ABI.
+(defn abs-ms [x]
+  (if (< x 0) (- x) x))
+
+(defn shot-hit [delta-present delta-ms threshold-ms]
+  (if delta-present
+    (if (<= delta-ms threshold-ms) 1 0)
+    0))

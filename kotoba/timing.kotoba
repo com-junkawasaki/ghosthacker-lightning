@@ -4,9 +4,14 @@
 (defn abs-ms [x]
   (if (< x 0) (- x) x))
 
+(def default-hit-window-ms 150)
+
 ;; delta-present is supplied by the host schedule adapter: 0 means the
 ;; schedule was empty, 1 means delta-ms is the bounded unsigned distance.
-(defn shot-hit [delta-present delta-ms threshold-ms]
-  (if delta-present
-    (if (<= delta-ms threshold-ms) 1 0)
-    0))
+(defn shot-hit
+  ([delta-present delta-ms]
+   (shot-hit delta-present delta-ms default-hit-window-ms))
+  ([delta-present delta-ms threshold-ms]
+   (if delta-present
+     (if (<= delta-ms threshold-ms) 1 0)
+     0)))

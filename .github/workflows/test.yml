@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Install Clojure CLI for compiler qualification
+        uses: DeLaGuardo/setup-clojure@13.0
+        with:
+          cli: latest
       - name: Verify timing kernel with released native Kotoba
         shell: bash
         run: |
@@ -25,7 +29,7 @@ jobs:
             https://github.com/kotoba-lang/kotoba/releases/download/v0.6.22/kotoba-linux-amd64.tar.gz.sha256
           (cd "$release_dir" && sha256sum -c kotoba-linux-amd64.tar.gz.sha256)
           tar -xzf "$release_dir/kotoba-linux-amd64.tar.gz" -C "$cli_dir"
-          "$cli_dir/kotoba" compile kotoba/timing.kotoba --target web \
+          "$cli_dir/kotoba" compile kotoba/timing_release_v0_6_22.kotoba --target web \
             --output "$RUNNER_TEMP/timing.mjs" --json
           grep -q 'kotoba.artifact/provenance' "$RUNNER_TEMP/timing.mjs.manifest.edn"
           node scripts/test-kotoba-timing.mjs "$RUNNER_TEMP/timing.mjs"
@@ -34,6 +38,15 @@ jobs:
             echo "expected forbidden eval to be rejected" >&2
             exit 1
           fi
+      - name: Verify canonical static multi-arity timing kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          clojure -Sdeps '{:deps {io.github.kotoba-lang/compiler {:git/url "https://github.com/kotoba-lang/compiler.git" :git/sha "b19476f19b21ce1f8fe71ec9b5b992c2e2ecdbe7"}}}' \
+            -M -m kotoba.compiler.cli compile kotoba/timing.kotoba --target js \
+            --output "$RUNNER_TEMP/timing-multi-arity.mjs" --json
+          grep -q 'kotoba.provenance/v1' "$RUNNER_TEMP/timing-multi-arity.mjs.provenance.edn"
+          node scripts/test-kotoba-timing.mjs "$RUNNER_TEMP/timing-multi-arity.mjs" multi-arity
 
   test:
     runs-on: ubuntu-latest
