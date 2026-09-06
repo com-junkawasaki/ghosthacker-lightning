@@ -19,13 +19,12 @@
 (def ^:private window-for #'terminal/window-for)
 
 (defn- silently [thunk]
-  (binding [*out* (java.io.StringWriter.)]
-    (thunk)))
+  (let [result (atom nil)]
+    (with-out-str (reset! result (thunk)))
+    @result))
 
 (defn- capture-out [thunk]
-  (let [w (java.io.StringWriter.)]
-    (binding [*out* w] (thunk))
-    (str w)))
+  (with-out-str (thunk)))
 
 (deftest fire-wave-eof-boundary-test
   (testing "stdinがEOF(空)ならshots-leftをゼロに落として即座に打ち切る(ハングしない)"
