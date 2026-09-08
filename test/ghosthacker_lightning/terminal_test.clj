@@ -9,7 +9,7 @@
    fire-wave!/countdown!/window-for（private var経由）だけを直接叩く。
    実プロセスとしての-main自体は手動検証済み(EOF/連打/全wave完走の
    いずれも正しく完了しプロセスがハングしないことを確認)。"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [clojure.test :refer [deftest is testing]]
             [ghosthacker-lightning.core :as core]
             [ghosthacker-lightning.terminal :as terminal]))
