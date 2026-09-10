@@ -29,7 +29,7 @@ Ghost Hacker ゲームポートフォリオ第10弾(最終ジャンル)。設計
 
 ## 実装範囲
 
-`src/ghosthacker_lightning/core.cljc` — pure、host-free。判定/state核:
+`src/ghosthacker_lightning/core.kotoba` — pure、host-free。判定/state核:
 
 - `flash-schedule`/`nearest-flash-delta-ms`/`shot-hit?`/`judge-shot-timing`
   — LIGHTNING**独自**のタイミング判定ヘルパー。FLOW/HARMONYの
@@ -44,17 +44,17 @@ Ghost Hacker ゲームポートフォリオ第10弾(最終ジャンル)。設計
 - `play-wave`/`play` — hits(bool列)からの通し再生
 - `accuracy`/`total-daemons`/`grade`/`summary` — リザルト画面向けサマリ
 
-`src/ghosthacker_lightning/waves.cljc` — サンプルのwaveシーケンス
+`src/ghosthacker_lightning/waves.kotoba` — サンプルのwaveシーケンス
 （`daemon-storm`、5wave。Daemon数が増え、`:window-ms`(hit判定窓)が
 狭まっていく難度カーブ）。
 
-**プレイ可能な最小プロトタイプ**として `src/ghosthacker_lightning/terminal.clj`
+**プレイ可能な最小プロトタイプ**として `src/ghosthacker_lightning/terminal.kotoba`
 がある。新規依存ゼロ（JVM標準の`future`/`read-line`/`System/currentTimeMillis`
 のみ）で、バックグラウンドスレッドが実時刻でtarget flash(⚡)を刻みながら、
 メインスレッドが`read-line`で入力を受けて実際の経過時間を判定する——
 グラフィック/音声は無いが、実際に人がEnterキーを叩いて5wave分遊べる。
 
-**ブラウザで遊べるホストアダプタ**が `src/ghosthacker_lightning/web.cljs`
+**ブラウザで遊べるホストアダプタ**が `src/ghosthacker_lightning/web.kotoba`
 （reagent、ADR-2607100900 follow-up (b)）: FLOW/HARMONYと同じくWeb Audio
 の`AudioContext.currentTime`でtarget flashクロックと合成ブリップ音
 （オシレーター、外部音声アセット不要）を駆動する。フェーズは
