@@ -11,7 +11,7 @@
   the pure core can drive a genuinely timed, interactive loop end-to-end
   across a wave sequence.
 
-  Run: clojure -M -m ghosthacker-lightning.terminal"
+  Run: kbb -M -m ghosthacker-lightning.terminal"
   (:require [ghosthacker-lightning.core :as core]
             [ghosthacker-lightning.waves :as waves]))
 
@@ -106,7 +106,7 @@
         (recur next-state)))))
 
 (defn -main
-  "Entry point for `clojure -M -m ghosthacker-lightning.terminal`. See the
+  "Entry point for `kbb -M -m ghosthacker-lightning.terminal`. See the
   ns docstring."
   [& _args]
   (println "GHOST HACKER: LIGHTNING — daemon-storm")
