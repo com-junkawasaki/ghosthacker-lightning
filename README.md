@@ -70,13 +70,13 @@ Ghost Hacker ゲームポートフォリオ第10弾(最終ジャンル)。設計
 ## 開発
 
 ```bash
-clojure -M:test
+kbb -M:test
 ```
 
 Lint（clj-kondo、Clojars経由でHomebrew等の別インストール不要）:
 
 ```bash
-clojure -M:lint
+kbb -M:lint
 ```
 
 `main`へのpush/PRで `.github/workflows/test.yml` が自動でテスト+lintを実行する。
@@ -84,15 +84,15 @@ clojure -M:lint
 ターミナルで遊んでみる（Enterで発射、5wave完走かhealth 0で終了）:
 
 ```bash
-clojure -M -m ghosthacker-lightning.terminal
+kbb -M -m ghosthacker-lightning.terminal
 ```
 
 ブラウザで遊んでみる（`npm install`は初回のみ、Spaceキーで発射）:
 
 ```bash
 npm install
-npx shadow-cljs watch app   # http://localhost:8303 で自動リロード開発
-npx shadow-cljs release app # public/ に静的バンドルをビルド(デプロイ可能)
+amu compile --target wasm32-browser app   # http://localhost:8303 で自動リロード開発
+amu compile --target wasm32-browser app # public/ に静的バンドルをビルド(デプロイ可能)
 ```
 
 ## ライセンス
